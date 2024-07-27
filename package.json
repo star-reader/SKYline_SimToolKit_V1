@@ -19,6 +19,7 @@
     "less": "^4.2.0",
     "mapbox-gl": "^3.5.2",
     "pubsub-js": "^1.9.4",
+    "vant": "^4.9.3",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
@@ -30,9 +31,9 @@
     "@types/pubsub-js": "^1.8.6",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/tsconfig": "^0.5.1",
+    "less-loader": "^12.2.0",
     "npm-run-all2": "^6.2.0",
     "typescript": "~5.4.0",
-    "less-loader": "^12.2.0",
     "vite": "^5.3.1",
     "vite-plugin-vue-devtools": "^7.3.1",
     "vue-tsc": "^2.0.21"

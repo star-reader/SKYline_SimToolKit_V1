@@ -1,0 +1,1 @@
+export default () =>  document.body.clientWidth < 750
