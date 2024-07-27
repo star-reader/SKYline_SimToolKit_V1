@@ -1,0 +1,40 @@
+{
+  "name": "front_end_vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@icon-park/vue-next": "^1.4.2",
+    "@mapbox/mapbox-gl-language": "^1.0.1",
+    "axios": "^1.7.2",
+    "element-plus": "^2.7.8",
+    "less": "^4.2.0",
+    "mapbox-gl": "^3.5.2",
+    "pubsub-js": "^1.9.4",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/axios": "^0.14.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^20.14.5",
+    "@types/pubsub-js": "^1.8.6",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/tsconfig": "^0.5.1",
+    "npm-run-all2": "^6.2.0",
+    "typescript": "~5.4.0",
+    "less-loader": "^12.2.0",
+    "vite": "^5.3.1",
+    "vite-plugin-vue-devtools": "^7.3.1",
+    "vue-tsc": "^2.0.21"
+  }
+}
