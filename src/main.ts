@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
+import Vant from 'vant'
 import App from './App.vue'
 import router from './router'
 
@@ -14,6 +15,6 @@ import './themes/night.less'
 
 const app = createApp(App)
 
-app.use(router).use(ElementPlus)
+app.use(router).use(ElementPlus).use(Vant)
 
 app.mount('#app')
