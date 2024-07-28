@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import EnrouteView from '@/views/EnrouteView.vue'
 import AirportView from '@/views/AirportView.vue'
 
 const router = createRouter({

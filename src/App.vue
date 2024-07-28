@@ -1,6 +1,8 @@
 <template>
   <!-- 顶部导航栏 -->
-   <NavBarLeftWindows v-if="!isPhone" />
+  <NavBarLeftWindows v-if="!isPhone" />
+   <!-- 航路图组件 -->
+  <EnrouteView />
   <RouterView v-slot="{ Component }">
         <KeepAlive>
           <component v-if="$route.meta.keepAlive" :key="$route.name" :is="Component" />
@@ -12,6 +14,7 @@
 <script lang='ts' setup>
 import { onMounted, ref } from 'vue';
 import NavBarLeftWindows from '@/layouts/NavBarLeft/Windows.vue'
+import EnrouteView from './views/EnrouteView.vue';
 import usePhoneWidth from './hooks/global/usePhoneWidth';
 
 const isPhone = ref(false)

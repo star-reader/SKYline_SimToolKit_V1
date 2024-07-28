@@ -1,7 +1,7 @@
 <template>
-    <efb-navbar-botto>
-        
-    </efb-navbar-botto>
+    <efb-navbar-bottom>
+
+    </efb-navbar-bottom>
 </template>
 
 <script lang='ts' setup>
