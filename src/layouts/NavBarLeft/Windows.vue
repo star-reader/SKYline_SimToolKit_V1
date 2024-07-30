@@ -10,7 +10,7 @@
                 <light-house theme="outline" size="25" fill="#fff"/>
             <template #title>机场信息</template>
             </el-menu-item>
-            <el-menu-item index="enroute">
+            <el-menu-item index="flight">
                 <in-flight theme="outline" size="25" fill="#fff"/>
             <template #title>航班签派</template>
             </el-menu-item>
@@ -52,6 +52,7 @@ efb-navbar-left{
     height: 100%;
     padding-top: 50px;
     background-color: var(--global-background-color);
+    z-index: 398;
     .el-menu{
         position: relative;
         width: 100%;
