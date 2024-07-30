@@ -6,7 +6,7 @@
         <van-floating-panel
             bottom-collapse
             class="efb-floating-panel"
-            v-show="props.showState" 
+            v-if="props.showState" 
             v-model:height="height" 
             :anchors="anchors" 
             @heightChange="heightChange"
