@@ -1,5 +1,5 @@
 <template>
-    <Transition name="mask">
+    <Transition name="float-bottom">
         <!-- 过渡动画 -->
         <!-- <efb-global-mask v-if="props.showState">
         </efb-global-mask> -->

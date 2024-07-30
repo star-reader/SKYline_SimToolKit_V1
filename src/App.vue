@@ -1,7 +1,8 @@
 <template>
   <!-- 顶部导航栏 -->
   <NavBarLeftWindows v-if="!isPhone" />
-  <NavBarLeftPhone v-else />
+  <!-- <NavBarLeftPhone v-else /> -->
+  <NavbarPhoneV2 v-else />
    <!-- 航路图组件 -->
   <EnrouteView />
   <RouterView v-slot="{ Component }">
@@ -15,7 +16,8 @@
 <script lang='ts' setup>
 import { onMounted, ref } from 'vue';
 import NavBarLeftWindows from '@/layouts/NavBarLeft/Windows.vue'
-import NavBarLeftPhone from '@/layouts/NavBarLeft/Phone.vue'
+// import NavBarLeftPhone from '@/layouts/NavBarLeft/Phone.vue'
+import NavbarPhoneV2 from '@/layouts/NavBarLeft/PhoneV2.vue'
 import EnrouteView from './views/EnrouteView.vue';
 import usePhoneWidth from './hooks/global/usePhoneWidth';
 
