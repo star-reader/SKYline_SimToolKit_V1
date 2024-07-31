@@ -61,7 +61,7 @@
 
 <script lang='ts' setup>
 import { ref } from 'vue'
-import {LightHouse, InFlight, Search, Airplane, Flag, ListCheckbox, Config} from '@icon-park/vue-next'
+import {LightHouse, InFlight, Airplane, Flag, ListCheckbox, Config} from '@icon-park/vue-next'
 import router from '@/router';
 
 const anchors = [
