@@ -24,7 +24,8 @@ const initMap = () => {
         container: 'enroute-map',
         center: [101.2, 19.4],
         zoom: 2.12,
-        style: 'mapbox://styles/mapbox/outdoors-v12',
+        //style: 'mapbox://styles/mapbox/outdoors-v12',
+        style: 'mapbox://styles/mapbox/standard',
         projection: 'globe' as any as mapboxgl.ProjectionSpecification
     })
     map.setMaxZoom(16.8)
