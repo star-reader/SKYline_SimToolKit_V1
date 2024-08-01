@@ -13,6 +13,7 @@ import './themes/element-overrid.less'
 import './themes/phone-overrid.less'
 import './themes/night.less'
 import './themes/animation.css'
+import './themes/aero.less'
 
 const app = createApp(App)
 

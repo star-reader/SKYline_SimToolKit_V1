@@ -1,6 +1,7 @@
 <template>
     <efb-enroute-charts sync-allowed render="webgl-3">
         <div id="enroute-map"></div>
+        <Controls />
     </efb-enroute-charts>
 </template>
 
@@ -14,6 +15,7 @@ import { addSKYlineLayer, addSKYlineMarker, changeMapTheme, initMapStyle } from 
 import { setStyleByItem, triggerRepaintStyle } from '@/hooks/map/useEnrouteMap'
 import useMouse from '@/hooks/map/useMouse'
 import addGridLayer from '@/utils/addGridLayer'
+import Controls from './MapControls/Controls.vue'
 
 let map: mapboxgl.Map
 

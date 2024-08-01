@@ -1,6 +1,6 @@
 <template>
     <van-floating-panel
-        class="efb-floating-panel efb-float-bottom"    
+        class="efb-floating-panel efb-float-bottom aero-glass-top"    
         v-model:height="height" 
         :anchors="anchors"
     >

@@ -1,11 +1,12 @@
 <template>
-    <efb-navbar-left>
+    <efb-navbar-left class="aero-glass-top">
         <el-menu
             router
             class="el-menu-vertical"
-            background-color="var(--global-background-color)"
+            style="background-color: unset;"
             collapse
         >
+        <!-- background-color="var(--global-background-color)" -->
             <el-menu-item index="airport">
                 <light-house theme="outline" size="25" fill="#fff"/>
             <template #title>机场信息</template>

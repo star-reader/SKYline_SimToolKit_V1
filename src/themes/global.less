@@ -21,6 +21,13 @@
 
 }
 
+// 使用app的属性来控制是否把地图调整按钮显示在最上面
+#app[top-route-pills = "true"]{
+    efb-map-controls{
+        top: 55px;
+    }
+}
+
 efb-navbar-left{
     .el-menu-item.is-active{
         svg path{
@@ -89,4 +96,13 @@ efb-global-mask{
 }
 .mapboxgl-ctrl.mapboxgl-ctrl-attrib:last-child{
     display: none !important;
+}
+
+@media (max-width: 750px){
+    .mapboxgl-ctrl-bottom-right{
+        bottom: 75px!important;
+        .mapboxgl-ctrl-attrib{
+            display: none !important;
+        }
+    }
 }
