@@ -24,8 +24,8 @@ const initMap = () => {
         container: 'enroute-map',
         center: [101.2, 19.4],
         zoom: 2.12,
-        //style: 'mapbox://styles/mapbox/outdoors-v12',
-        style: 'mapbox://styles/mapbox/standard',
+        style: 'mapbox://styles/mapbox/outdoors-v12',
+        //style: 'mapbox://styles/mapbox/standard',
         projection: 'globe' as any as mapboxgl.ProjectionSpecification
     })
     map.setMaxZoom(16.8)
@@ -41,11 +41,11 @@ const initMap = () => {
         new mapboxgl.ScaleControl({ unit: "nautical" }),
         "bottom-right",
     )
-    map.addControl(new mapboxgl.NavigationControl({
-        'visualizePitch': true
-    }), "top-right")
-    let language = new MapboxLanguage({ defaultLanguage: "zh-Hans" })
-    map.addControl(language)
+    // map.addControl(new mapboxgl.NavigationControl({
+    //     'visualizePitch': true
+    // }), "top-right")
+    // let language = new MapboxLanguage({ defaultLanguage: "zh-Hans" })
+    // map.addControl(language)
     const zoom: string | null = localStorage.getItem('map-zoom')
     const center: string | null = localStorage.getItem('map-center')
     if (zoom) {

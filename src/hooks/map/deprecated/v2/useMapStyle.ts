@@ -28,29 +28,6 @@ const initMapStyle = (map: Map) => {
     if (!map) {
         return
     }
-    let layers = (<StyleSpecification>map.getStyle()).layers
-    console.log(layers)
-    map.setPaintProperty('land', 'background-color', '#F5F5F5')  //ifrh，ifrl
-    //map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')  //vor
-    //map.setPaintProperty('water', 'fill-color', 'rgb(158,206,250)')
-    //map.setPaintProperty('water-depth', 'fill-color', 'rgb(158,206,250)')
-    map.setPaintProperty('water', 'fill-color', 'rgb(111,203,255)')
-    map.setPaintProperty('water-depth', 'fill-color', 'rgb(111,203,255)')
-    for (let i in layers) {
-        let d = layers[i]
-        if (!d.id.includes('land') && !d.id.includes('water')) {
-            map.setLayoutProperty(d.id, 'visibility', 'none')
-        }
-    }
-    map.setLayoutProperty('waterway-label', 'visibility', 'none')
-    map.setLayoutProperty('water-line-label', 'visibility', 'none')
-    map.setLayoutProperty('water-point-label', 'visibility', 'none')
-    map.setLayoutProperty('landcover', 'visibility', 'none')
-    map.setLayoutProperty('landuse', 'visibility', 'none')
-    map.setLayoutProperty('wetland', 'visibility', 'none')
-    map.setLayoutProperty('wetland-pattern', 'visibility', 'none')
-    map.setLayerZoomRange('landcover', 0, 16)
-    map.setPaintProperty('landcover','fill-opacity', 0.8)
 }
 
 const addSKYlineMarker = async (map: Map): Promise<void> => {
@@ -111,7 +88,7 @@ const addSKYlineLayer = (map: Map) => {
         layout:{
             visibility: 'none'
         }
-    },'land-structure-line')
+    })
     //map.setLayoutProperty('hillshade', 'visibility', 'visible')
     //顺序： ndb awy awy-label wpt vor apt
     //NDB
@@ -1760,89 +1737,6 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
     }
     if (theme === 'light' && isUnSateLayer){
         //基础
-        if (style.includes('terrain')){
-            map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')
-        }else{
-            map.setPaintProperty('land', 'background-color', '#fff')
-        }
-        
-        map.setPaintProperty('water', 'fill-color', 'rgb(111,203,255)')
-        map.setPaintProperty('water-depth', 'fill-color', 'rgb(111,203,255)')
-        map.setPaintProperty('landcover', 'fill-opacity', 0.8)
-        map.setFog({
-            "range": [
-                1,
-                20
-            ],
-            "color": [
-                "interpolate",
-                [
-                    "linear"
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                "hsl(200, 100%, 100%)",
-                6,
-                "hsl(200, 50%, 90%)"
-            ],
-            "high-color": [
-                "interpolate",
-                [
-                    "linear"
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                "hsl(200, 100%, 60%)",
-                6,
-                "hsl(310, 60%, 80%)"
-            ],
-            "space-color": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                "hsl(205, 10%, 10%)",
-                6,
-                "hsl(205, 60%, 50%)"
-            ],
-            "horizon-blend": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                0.01,
-                6,
-                0.1
-            ],
-            "star-intensity": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                0.2,
-                6,
-                0
-            ]
-        } as FogSpecification)
         //导航数据
         map.setPaintProperty('efb-airports', 'text-halo-color', '#fff')
         map.setPaintProperty('efb-vors', 'text-halo-color', '#fff')
@@ -1880,91 +1774,6 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
         map.setPaintProperty('amm-terminal-base', 'fill-extrusion-color', '#4682B4')
         map.setPaintProperty('amm-airport', 'fill-color', '#90EE90')
         //公路数据
-        map.setPaintProperty('road-label', 'text-color', 'hsl(0,0%, 0%)')
-        map.setPaintProperty('road-label', 'text-halo-color', [
-            "match",
-            [
-                "get",
-                "class"
-            ],
-            [
-                "motorway",
-                "trunk"
-            ],
-            "hsla(60, 25%, 100%, 0.75)",
-            "hsl(60, 25%, 100%)"
-        ])
-        map.setPaintProperty('road-label', 'text-halo-width', 1)
-        map.setPaintProperty('bridge-primary', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('bridge-secondary-tertiary', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('bridge-construction', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('bridge-street-low', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('bridge-street', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('bridge-minor', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-primary', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-secondary-tertiary', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-construction', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-street-low', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-street', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-minor', 'line-color', 'hsl(0, 0%, 95%)')
-        map.setPaintProperty('road-motorway-trunk', 'line-color', [
-            "step",
-            [
-                "zoom"
-            ],
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 88%, 69%)",
-                "trunk",
-                "hsl(35, 81%, 59%)",
-                "hsl(60, 18%, 85%)"
-            ],
-            9,
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 100%, 75%)",
-                "hsl(35, 89%, 75%)"
-            ]
-        ])
-        map.setPaintProperty('bridge-motorway-trunk', 'line-color', [
-            "step",
-            [
-                "zoom"
-            ],
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 88%, 69%)",
-                "trunk",
-                "hsl(35, 81%, 59%)",
-                "hsl(60, 18%, 85%)"
-            ],
-            9,
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 100%, 75%)",
-                "hsl(35, 89%, 75%)"
-            ]
-        ])
         //MORA
         map.setPaintProperty('mora', 'text-halo-color', '#f5f5f5')
         map.setPaintProperty('mora', 'text-color', [
@@ -2005,69 +1814,6 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
         }
     }else{
         //基础
-        map.setPaintProperty('land', 'background-color', '#000')
-        map.setPaintProperty('water', 'fill-color', 'rgb(17, 31, 65)')
-        map.setPaintProperty('water-depth', 'fill-color', 'rgb(17, 31, 65)')
-        map.setPaintProperty('landcover', 'fill-opacity', 0.16)
-        map.setFog({
-            "range": [
-                0.5,
-                20
-            ],
-            "color": [
-                "interpolate",
-                [
-                    "linear"
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                "hsl(200, 100%, 100%)",
-                6,
-                "hsl(200, 50%, 90%)"
-            ],
-            "high-color": "rgb(20, 49, 118)",
-            "space-color": [
-                "interpolate",
-                ["linear"],
-                ["zoom"],
-                4,
-                "#010b19",
-                7,
-                "rgb(24, 31, 37)"
-              ],
-            "horizon-blend": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                0.01,
-                6,
-                0.018
-            ],
-            "star-intensity": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                2,
-                0.3,
-                4,
-                0.2,
-                6,
-                0.2
-            ]
-        } as FogSpecification)
         //导航数据
         map.setPaintProperty('efb-airports', 'text-halo-color', '#000000')
         map.setPaintProperty('efb-vors', 'text-halo-color', '#000000')
@@ -2098,79 +1844,6 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
         map.setPaintProperty('amm-terminal-base', 'fill-extrusion-color', '#778899')
         map.setPaintProperty('amm-airport', 'fill-color', '#2E8B57')
         //公路数据
-        map.setPaintProperty('road-label', 'text-color', '#DCDCDC')
-        map.setPaintProperty('road-label', 'text-halo-color', '#DCDCDC')
-        map.setPaintProperty('road-label', 'text-halo-width', 0)
-        map.setPaintProperty('bridge-primary', 'line-color', '#808080')
-        map.setPaintProperty('bridge-secondary-tertiary', 'line-color', '#696969')
-        map.setPaintProperty('bridge-construction', 'line-color', '#808080')
-        map.setPaintProperty('bridge-street-low', 'line-color', '#696969')
-        map.setPaintProperty('bridge-street', 'line-color', '#696969')
-        map.setPaintProperty('bridge-minor', 'line-color', '#696969')
-        map.setPaintProperty('road-primary', 'line-color', '#808080')
-        map.setPaintProperty('road-secondary-tertiary', 'line-color', '#696969')
-        map.setPaintProperty('road-construction', 'line-color', '#808080')
-        map.setPaintProperty('road-street-low', 'line-color', '#696969')
-        map.setPaintProperty('road-street', 'line-color', '#696969')
-        map.setPaintProperty('road-minor', 'line-color', '#696969')
-        map.setPaintProperty('road-motorway-trunk', 'line-color', [
-            "step",
-            [
-                "zoom"
-            ],
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 50%, 55%)",
-                "trunk",
-                "rgb(165, 109, 30)",
-                "#696969"
-            ],
-            9,
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 50%, 55%)",
-                "rgb(165, 100, 30)"
-            ]
-        ])
-        map.setPaintProperty('bridge-motorway-trunk', 'line-color', [
-            "step",
-            [
-                "zoom"
-            ],
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 50%, 55%)",
-                "trunk",
-                "rgb(165, 109, 30)",
-                "#696969"
-            ],
-            9,
-            [
-                "match",
-                [
-                    "get",
-                    "class"
-                ],
-                "motorway",
-                "hsl(15, 50%, 55%)",
-                "rgb(165, 100, 30)"
-            ]
-        ])
         //MORA
         map.setPaintProperty('mora', 'text-halo-color', '#000')
         map.setPaintProperty('mora', 'text-color', [
