@@ -18,8 +18,16 @@
         -webkit-backdrop-filter: blur(6px);
         backdrop-filter: blur(6px);
     }
-
+    &[theme = 'night']{
+        .aero-glass-top{
+            background-image: linear-gradient(30deg, rgb(21 75 137 / 62%) 40%, rgb(25 158 144 / 39%) 80%);
+        }
+        .aero-glass-reversed{
+            background-image: linear-gradient(30deg, rgba(25 158 144 / 39%) 40%, rgba(21 75 137 / 62%) 80%);
+        }
+    }
 }
+
 
 // 使用app的属性来控制是否把地图调整按钮显示在最上面
 #app[top-route-pills = "true"]{

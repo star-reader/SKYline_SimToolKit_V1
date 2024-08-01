@@ -4,9 +4,9 @@
             <map-draw theme="outline" size="22" fill="#5f96d6"/>
         </div>
         <div class="divider"></div>
-        <div class="control-item">
-            <sun-one theme="outline" size="22" fill="#5f96d6"/>
-            <!-- <moon theme="outline" size="24" fill="#5f96d6"/> -->
+        <div class="control-item" @click="handleChangeNightMode">
+            <sun-one theme="outline" size="22" fill="#5f96d6" v-if="dTheme === 'light'" />
+            <moon theme="outline" size="24" fill="#5f96d6" v-else />
         </div>
         <div class="divider"></div>
         <div class="control-item">
@@ -17,6 +17,19 @@
 
 <script lang='ts' setup>
 import { MapDraw, SunOne, Moon, Local } from '@icon-park/vue-next'
+import pubsub from 'pubsub-js'
+import { getMapTheme } from '@/hooks/map/useMapStyle';
+import { ref } from 'vue';
+
+const dTheme = ref(getMapTheme())
+
+const handleChangeNightMode = () => {
+    const theme = dTheme.value === 'night' ? 'light' : 'night'
+    dTheme.value = theme
+    localStorage.setItem('theme', theme)
+    pubsub.publish('change-theme', theme)
+}
+
 </script>
 
 <style lang='less' scoped>

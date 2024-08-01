@@ -15,6 +15,7 @@
 
 <script lang='ts' setup>
 import { onMounted, ref } from 'vue';
+import pubsub from 'pubsub-js'
 import NavBarLeftWindows from '@/layouts/NavBarLeft/Windows.vue'
 // import NavBarLeftPhone from '@/layouts/NavBarLeft/Phone.vue'
 import NavbarPhoneV2 from '@/layouts/NavBarLeft/PhoneV2.vue'

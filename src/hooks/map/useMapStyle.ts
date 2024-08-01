@@ -1730,7 +1730,7 @@ const getMapTheme = () => {
         localStorage.setItem('theme', 'light')
     }
     const theme = h ? h : 'light'
-    document.getElementById('root')?.setAttribute('theme' , theme)
+    document.getElementById('app')?.setAttribute('theme' , theme)
     return theme
 }
 
