@@ -1,17 +1,18 @@
 <template>
+    <div>
     <Teleport to='#app'>
         <efb-theme-choice-model>
                 <efb-choice-core class='aero-glass-top'>
                     <div class="title-area">
                         <div class="title">选择地图样式</div>
-                        <div @Click="handleClose">
+                        <div @click="handleClose">
                             <CloseButton isAeroGlass />
                         </div>
                     </div>
                     <div class="selections-wrapper">
                         <div class="space-title">选择预设</div>
                         <div class="selections" role='cell'>
-                            <div @Click="() => changePreset('route')" class="selections-item">
+                            <div @click="() => changePreset('route')" class="selections-item">
                                 <img :src="satedetail" alt="Route Map" class="pre-img" />
                                 <div class="text-a1">Route Map</div>
                                 <div class="text-a2">航路地图</div>
@@ -56,65 +57,66 @@
                         <div class="space-text-lh2">导航设备</div>
 
                         <div class="filter-rows">
-                            <FilterItem content="机场" data="airport">
+                            <ButtonItem content="机场" data="airport">
                                 <LightHouse theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem content="VOR" data="vor">
+                            </ButtonItem>
+                            <ButtonItem content="VOR" data="vor">
                                 <HexagonOne theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="ndb" content="NDB" >
+                            </ButtonItem>
+                            <ButtonItem data="ndb" content="NDB" >
                                 <Halo theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="airway" content="航路" >
+                            </ButtonItem>
+                            <ButtonItem data="airway" content="航路" >
                                 <ShareOne theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="waypoint" content="航路点" >
+                            </ButtonItem>
+                            <ButtonItem data="waypoint" content="航路点" >
                                 <Triangle theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="terminal-waypoint" content="终端航路点" >
+                            </ButtonItem>
+                            <ButtonItem data="terminal-waypoint" content="终端航路点" >
                                 <HandleTriangle theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
+                            </ButtonItem>
                         </div>
                         <div class="space-text-lh2">地图显示</div>
                         <div class="filter-rows">
-                            <FilterItem data="amm" content="机场详情" >
+                            <ButtonItem data="amm" content="机场详情" >
                                 <Airplane theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="road" content="公路/交通" >
+                            </ButtonItem>
+                            <ButtonItem data="road" content="公路/交通" >
                                 <Road theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="terrain" content="地形/山区" >
+                            </ButtonItem>
+                            <ButtonItem data="terrain" content="地形/山区" >
                                 <Mountain theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="grid" content="MORA" >
+                            </ButtonItem>
+                            <ButtonItem data="grid" content="MORA" >
                                 <GridTwo theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="3d" content="3D地形" >
+                            </ButtonItem>
+                            <ButtonItem data="3d" content="3D地形" >
                                 <CoordinateSystem theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
+                            </ButtonItem>
                         </div>
                         <div class="space-text-lh2">辅助图层</div>
                         <div class="filter-rows">
-                            <FilterItem data="weather" content="气象雷达" isNaClick >
+                            <ButtonItem data="weather" content="气象雷达" isNaClick >
                                 <LinkCloud theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="dawndarkline" content="晨昏线" isNaClick >
+                            </ButtonItem>
+                            <ButtonItem data="dawndarkline" content="晨昏线" isNaClick >
                                 <Brightness theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
+                            </ButtonItem>
                         </div>
                         <div class="space-text-lh2">联飞功能</div>
                         <div class="filter-rows">
-                            <FilterItem data="ownship" content="OwnShip" isNaClick >
+                            <ButtonItem data="ownship" content="OwnShip" isNaClick >
                                 <MoveOne theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
-                            <FilterItem data="server" content="ADSB" isNaClick >
+                            </ButtonItem>
+                            <ButtonItem data="server" content="ADSB" isNaClick >
                                 <RadarThree theme="outline" size="24" fill="#ffffff"/>
-                            </FilterItem>
+                            </ButtonItem>
                         </div>
                     </div>
                 </efb-choice-core>
             </efb-theme-choice-model>
     </Teleport>
+    </div>
 </template>
 
 <script lang='ts' setup>
@@ -123,17 +125,17 @@ import { Airplane, Brightness, CoordinateSystem, GridTwo, Halo,
     MoveOne, RadarThree, Road, ShareOne, Triangle } from '@icon-park/vue-next'
 import pubsub from 'pubsub-js'
 import CloseButton from '@/components/common/CloseButton.vue'
-import Filteritem from './ButtonItem.vue'
+import ButtonItem from './ButtonItem.vue'
 import { getStyleByPreset } from '@/hooks/map/useEnrouteMap'
 
-import ifrh from '../../assets/mapTheme/ifrh.png'
-import ifrl from '../../assets/mapTheme/ifrl.png'
-import vfr from '../../assets/mapTheme/vfr.png'
-import sate from '../../assets/mapTheme/sate.png'
-import satedetail from '../../assets/mapTheme/satedetail.png'
-import routel from '../../assets/mapTheme/routel.png'
-import map_t from '../../assets/mapTheme/map.png'
-import aip from '../../assets/mapTheme/aip.png'
+import ifrh from '@/assets/mapTheme/ifrh.png'
+import ifrl from '@/assets/mapTheme/ifrl.png'
+import vfr from '@/assets/mapTheme/vfr.png'
+import sate from '@/assets/mapTheme/sate.png'
+import satedetail from '@/assets/mapTheme/satedetail.png'
+import routel from '@/assets/mapTheme/routel.png'
+import map_t from '@/assets/mapTheme/map.png'
+import aip from '@/assets/mapTheme/aip.png'
 
 const handleClose = () => {
     pubsub.publish('close-map-choice', 1)
@@ -257,5 +259,15 @@ efb-theme-choice-model{
             }
         }
     }
+}
+.filter-rows{
+    position: relative;
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    margin: 4px 0;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    
 }
 </style>

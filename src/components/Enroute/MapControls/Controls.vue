@@ -1,25 +1,34 @@
 <template>
-    <efb-map-controls class="aero-small-pressed">
-        <div class="control-item">
-            <map-draw theme="outline" size="22" fill="#5f96d6"/>
+    <!-- <div> -->
+        <div class="efb-map-controls aero-small-pressed">
+            <div class="control-item" @click="() => isShowChoice = true">
+                <map-draw theme="outline" size="22" fill="#5f96d6"/>
+            </div>
+            <div class="divider"></div>
+            <div class="control-item" @click="handleChangeNightMode">
+                <sun-one theme="outline" size="22" fill="#5f96d6" v-if="dTheme === 'light'" />
+                <moon theme="outline" size="24" fill="#5f96d6" v-else />
+            </div>
+            <div class="divider"></div>
+            <div class="control-item">
+                <local theme="outline" size="22" fill="#5f96d6"/>
+            </div>
         </div>
-        <div class="divider"></div>
-        <div class="control-item" @click="handleChangeNightMode">
-            <sun-one theme="outline" size="22" fill="#5f96d6" v-if="dTheme === 'light'" />
-            <moon theme="outline" size="24" fill="#5f96d6" v-else />
-        </div>
-        <div class="divider"></div>
-        <div class="control-item">
-            <local theme="outline" size="22" fill="#5f96d6"/>
-        </div>
-    </efb-map-controls>
+    
+        <transition name="enroute-control" >
+            <ControlPanel v-if="isShowChoice" />
+        </transition>
+    <!-- </div> -->
 </template>
 
 <script lang='ts' setup>
 import { MapDraw, SunOne, Moon, Local } from '@icon-park/vue-next'
 import pubsub from 'pubsub-js'
+import { onMounted, ref } from 'vue';
 import { getMapTheme } from '@/hooks/map/useMapStyle';
-import { ref } from 'vue';
+import ControlPanel from './ControlPanel.vue';
+
+const isShowChoice = ref(false)
 
 const dTheme = ref(getMapTheme())
 
@@ -30,10 +39,14 @@ const handleChangeNightMode = () => {
     pubsub.publish('change-theme', theme)
 }
 
+onMounted(() => {
+    pubsub.subscribe('close-map-choice', () => isShowChoice.value = false)
+})
+
 </script>
 
 <style lang='less' scoped>
-efb-map-controls{
+.efb-map-controls{
     position: absolute;
     right: 10px;
     //top: 55px;
