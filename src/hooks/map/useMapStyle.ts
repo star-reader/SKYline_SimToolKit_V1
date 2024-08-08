@@ -1727,17 +1727,38 @@ const addSKYlineLayer_old = (map: Map) => {
 }
 
 const addSKYlineLayer = (map: Map, layerConfig: EnrouteStyle) => {
-    for (let i of layerConfig.sources){
-        map.addSource(i.id, i.source)
-    }
-    for (let i of layerConfig.navdata){
-        let layer: EnrouteLayer = JSON.parse(dataDecrypt(i))
-        map.addLayer(layer.layer, layer.isBeforeId)
-    }
-    for (let i of layerConfig.amm){
-        let layer: EnrouteLayer = JSON.parse(dataDecrypt(i))
-        map.addLayer(layer.layer, layer.isBeforeId)
-    }
+    map.addSource('navdata',{
+        'type': 'vector',
+        'tiles': [apiUrl.enroute.routeMap],
+        'maxzoom': 14,
+        'minzoom': 0,
+        "format": "pbf",
+    })
+    map.addSource('amm',{
+        'type': 'vector',
+        'tiles': [apiUrl.enroute.amm],
+        'maxzoom': 16,
+        'minzoom': 11,
+        "format": "pbf",
+    })
+    map.addSource('dem',{
+        "type": "raster-dem",
+        "tiles": [
+            "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
+        ],
+        "minzoom": 0,
+        "maxzoom": 16,
+        "tileSize": 256,
+        "encoding": "terrarium"
+    })
+    map.addSource('satellite',{
+        "type": "raster",
+        "url": "mapbox://mapbox.satellite",
+        "tileSize": 256
+    })
+    //
+    // navdata部分
+
 }
 
 const getMapTheme = () => {

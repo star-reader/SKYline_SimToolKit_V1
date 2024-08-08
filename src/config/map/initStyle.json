@@ -1,0 +1,8 @@
+{
+    "version": 8,
+    "name": "Init",
+    "sprite": "mapbox://sprites/mapbox/outdoors-v12",
+    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+    "sources": {},
+    "layers": []
+}

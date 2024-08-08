@@ -7,17 +7,21 @@
 
 <script lang='ts' setup>
 import { onMounted, ref } from 'vue'
-import mapboxgl from 'mapbox-gl'
+import mapboxgl, { type StyleSpecification } from 'mapbox-gl'
 import MapboxLanguage from '@mapbox/mapbox-gl-language'
+import axios from 'axios'
 import pubsub from 'pubsub-js'
 import token from '@/config/map/token'
-import { addSKYlineLayer, addSKYlineMarker, changeMapTheme, initMapStyle } from '@/hooks/map/useMapStyle'
+import { addSKYlineMarker, changeMapTheme, initMapStyle } from '@/hooks/map/useMapStyle'
 import { setStyleByItem, triggerRepaintStyle } from '@/hooks/map/useEnrouteMap'
 import useMouse from '@/hooks/map/useMouse'
-import addGridLayer from '@/utils/addGridLayer'
 import Controls from './MapControls/Controls.vue'
+import apiUrl from '@/config/api/apiUrl'
+import { dataDecrypt } from '@/utils/crypto'
+import initStyle from '@/config/map/initStyle.json'
 
 let map: mapboxgl.Map
+let isFirstLoad: boolean = true
 
 const initMap = () => {
     if (map) return
@@ -26,7 +30,7 @@ const initMap = () => {
         container: 'enroute-map',
         center: [101.2, 19.4],
         zoom: 2.12,
-        style: 'mapbox://styles/mapbox/outdoors-v12',
+        style: initStyle as any as StyleSpecification,
         //style: 'mapbox://styles/mapbox/standard',
         projection: 'globe' as any as mapboxgl.ProjectionSpecification
     })
@@ -74,19 +78,16 @@ const bindMapEventListener = () => {
         localStorage.setItem('map-center', map.getCenter().toString())
     })
     map.on('style.load', async () => {
-        initMapStyle(map)
-        map.addSource('mapbox-dem', {
-            'type': 'raster-dem',
-            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-            'tileSize': 512,
-            'maxzoom': 14
-        })
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1 })
-        await addSKYlineMarker(map)
-        addSKYlineLayer(map)
-        addGridLayer(map)
-        triggerRepaintStyle(map)
-        useMouse(map)
+        if (isFirstLoad){
+            isFirstLoad = false
+            await addSKYlineMarker(map)
+            const style = JSON.parse(dataDecrypt((await axios.get(apiUrl.enroute.style)).data.style))
+            map.setStyle(style)
+        }else{
+            initMapStyle(map)
+            triggerRepaintStyle(map)
+            useMouse(map)
+        }
     })
     map.on('click', (_e) => {
     // useEnrouteQuery(map.queryRenderedFeatures(e.point))

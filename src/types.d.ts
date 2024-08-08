@@ -9,7 +9,7 @@ type EnrouteLayer = {
 }
 
 type EnrouteStyle = {
-    basic:[],
+    basic:any[],
     navdata: string[], // encrypted
     amm: string[], //encrypted,
     sources: EnrouteSource[]
