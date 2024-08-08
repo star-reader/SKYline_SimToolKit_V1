@@ -31,7 +31,7 @@ const initMap = () => {
         center: [101.2, 19.4],
         zoom: 2.12,
         style: initStyle as any as StyleSpecification,
-        //style: 'mapbox://styles/mapbox/standard',
+        //style: 'mapbox://styles/mapbox/outdoors-v12',
         projection: 'globe' as any as mapboxgl.ProjectionSpecification
     })
     map.setMaxZoom(16.8)

@@ -30,7 +30,6 @@ const initMapStyle = (map: Map) => {
         return
     }
     let layers = (<StyleSpecification>map.getStyle()).layers
-    console.log(layers)
     map.setPaintProperty('land', 'background-color', '#F5F5F5')  //ifrh，ifrl
     //map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')  //vor
     //map.setPaintProperty('water', 'fill-color', 'rgb(158,206,250)')
