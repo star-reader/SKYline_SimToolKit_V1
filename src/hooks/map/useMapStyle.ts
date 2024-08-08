@@ -73,7 +73,8 @@ const addSKYlineMarker = async (map: Map): Promise<void> => {
 
 }
 
-const addSKYlineLayer = (map: Map) => {
+// !deprecated
+const addSKYlineLayer_old = (map: Map) => {
     map.addSource('amm',{
         'type': 'vector',
         'tiles': ['https://api.skylineflyleague.cn/efb/mapbox-enroute-beta/amm/{z}/{x}/{y}'],
@@ -1722,6 +1723,10 @@ const addSKYlineLayer = (map: Map) => {
             'text-halo-blur': 5
         }
     })
+}
+
+const addSKYlineLayer = (map: Map, layerConfig: any[]) => {
+
 }
 
 const getMapTheme = () => {
