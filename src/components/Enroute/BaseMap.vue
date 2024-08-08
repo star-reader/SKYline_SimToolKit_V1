@@ -19,9 +19,9 @@ import Controls from './MapControls/Controls.vue'
 import apiUrl from '@/config/api/apiUrl'
 import { dataDecrypt } from '@/utils/crypto'
 import initStyle from '@/config/map/initStyle.json'
+import addGridLayer from '@/utils/addGridLayer'
 
 let map: mapboxgl.Map
-let isFirstLoad: boolean = true
 
 const initMap = () => {
     if (map) return
@@ -78,16 +78,14 @@ const bindMapEventListener = () => {
         localStorage.setItem('map-center', map.getCenter().toString())
     })
     map.on('style.load', async () => {
-        if (isFirstLoad){
-            isFirstLoad = false
-            await addSKYlineMarker(map)
-            const style = JSON.parse(dataDecrypt((await axios.get(apiUrl.enroute.style)).data.style))
-            map.setStyle(style)
-        }else{
-            initMapStyle(map)
-            triggerRepaintStyle(map)
-            useMouse(map)
-        }
+        await addSKYlineMarker(map)
+        const style = JSON.parse(dataDecrypt((await axios.get(apiUrl.enroute.style)).data.style))
+        map.setStyle(style)
+        initMapStyle(map)
+        addGridLayer(map)
+        console.log(map.getStyle()?.layers)
+        triggerRepaintStyle(map)
+        useMouse(map)
     })
     map.on('click', (_e) => {
     // useEnrouteQuery(map.queryRenderedFeatures(e.point))

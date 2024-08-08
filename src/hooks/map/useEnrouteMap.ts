@@ -82,6 +82,8 @@ const getStyle = (): string[] => {
 
 const triggerRepaintStyle = (map: mapboxgl.Map) => {
     if (!map) return
+    const styleLayers = map.getStyle()?.layers
+    if (!styleLayers) return
     const preset = getPreset()
     if (preset === 'World Satellite' || preset === 'Route Map' || preset === 'Route Map Low'){
         map.setLayoutProperty('sate', 'visibility', 'visible')
@@ -97,62 +99,66 @@ const triggerRepaintStyle = (map: mapboxgl.Map) => {
         map.setLayoutProperty('landcover', 'visibility', 'visible')
     }
     const style = getStyle()
+
     if (style.includes('airport')){
-        map.setLayoutProperty('efb-airports', 'visibility', 'visible')
+        map.setLayoutProperty('airport', 'visibility', 'visible')
+        map.setLayoutProperty('airport-label', 'visibility', 'visible')
     }else {
-        map.setLayoutProperty('efb-airports', 'visibility', 'none')
+        map.setLayoutProperty('airport', 'visibility', 'none')
+        map.setLayoutProperty('airport-label', 'visibility', 'none')
     }
     if (style.includes('vor')){
-        map.setLayoutProperty('efb-vors', 'visibility', 'visible')
+        map.setLayoutProperty('vhf', 'visibility', 'visible')
+        map.setLayoutProperty('vhf-label', 'visibility', 'visible')
     }else {
-        map.setLayoutProperty('efb-vors', 'visibility', 'none')
+        map.setLayoutProperty('vhf', 'visibility', 'none')
+        map.setLayoutProperty('vhf-label', 'visibility', 'none')
     }
     if (style.includes('ndb')){
-        map.setLayoutProperty('efb-ndbs', 'visibility', 'visible')
+        map.setLayoutProperty('ndb', 'visibility', 'visible')
+        map.setLayoutProperty('ndb-label', 'visibility', 'visible')
     }else {
-        map.setLayoutProperty('efb-ndbs', 'visibility', 'none')
+        map.setLayoutProperty('ndb', 'visibility', 'none')
+        map.setLayoutProperty('ndb-label', 'visibility', 'none')
     }
     if (style.includes('airway')){
-        map.setLayoutProperty('efb-airways', 'visibility', 'visible')
-        map.setLayoutProperty('efb-firs', 'visibility', 'visible')
-        map.setLayoutProperty('efb-airways-label', 'visibility', 'visible')
-        if (getPreset() === 'World IFR Low' || getPreset() === 'World VFR'){
-            map.setFilter('efb-airways',[
-                "!=",
-                ['get','type'],
-                'LLL'
-            ])
-            map.setFilter('efb-airways-label',[
-                "!=",
-                ['get','type'],
-                'LLL'
-            ])
-        }else{
-            map.setFilter('efb-airways',[
-                "!=",
-                ['get','type'],
-                'L'
-            ])
-            map.setFilter('efb-airways-label',[
-                "!=",
-                ['get','type'],
-                'L'
-            ])
+        map.setLayoutProperty('airway', 'visibility', 'visible')
+        // map.setLayoutProperty('airway-bg', 'visibility', 'visible')
+        map.setLayoutProperty('fir-boundary', 'visibility', 'visible')
+        map.setLayoutProperty('fir-label', 'visibility', 'visible')
+        map.setLayoutProperty('airway-label', 'visibility', 'visible')
+        const isLowAirway  = (getPreset() === 'World IFR Low' || getPreset() === 'World VFR')
+        for (const layer of styleLayers) {
+            if (
+              layer.hasOwnProperty("metadata") && layer.metadata?.hasOwnProperty("hilo")
+            ) {
+              map.setFilter(layer.id, [
+                "==",
+                !isLowAirway ? "hi" : "lo",
+                1,
+              ])
+            }
         }
     }else {
-        map.setLayoutProperty('efb-firs', 'visibility', 'none')
-        map.setLayoutProperty('efb-airways', 'visibility', 'none')
-        map.setLayoutProperty('efb-airways-label', 'visibility', 'none')
+        map.setLayoutProperty('airway', 'visibility', 'none')
+        // map.setLayoutProperty('airway-bg', 'visibility', 'none')
+        map.setLayoutProperty('fir-boundary', 'visibility', 'none')
+        map.setLayoutProperty('fir-label', 'visibility', 'none')
+        map.setLayoutProperty('airway-label', 'visibility', 'none')
     }
     if (style.includes('waypoint')){
-        map.setLayoutProperty('efb-waypoints', 'visibility', 'visible')
+        map.setLayoutProperty('waypoint', 'visibility', 'visible')
+        map.setLayoutProperty('waypoint-label', 'visibility', 'visible')
     }else {
-        map.setLayoutProperty('efb-waypoints', 'visibility', 'none')
+        map.setLayoutProperty('waypoint', 'visibility', 'none')
+        map.setLayoutProperty('waypoint-label', 'visibility', 'none')
     }
     if (style.includes('terminal-waypoint')){
-        map.setLayoutProperty('efb-waypoints-terminal', 'visibility', 'visible')
+        map.setLayoutProperty('terminal-waypoint', 'visibility', 'visible')
+        map.setLayoutProperty('terminal-waypoint-label', 'visibility', 'visible')
     }else {
-        map.setLayoutProperty('efb-waypoints-terminal', 'visibility', 'none')
+        map.setLayoutProperty('terminal-waypoint', 'visibility', 'none')
+        map.setLayoutProperty('terminal-waypoint-label', 'visibility', 'none')
     }
     if (style.includes('terrain')){
         map.setLayoutProperty('hillshade', 'visibility', 'visible')
@@ -166,10 +172,6 @@ const triggerRepaintStyle = (map: mapboxgl.Map) => {
     }
     if (style.includes('road')){
         map.setLayoutProperty('road-label', 'visibility', 'visible')
-        map.setLayoutProperty('bridge-motorway-trunk', 'visibility', 'visible')
-        map.setLayoutProperty('bridge-primary', 'visibility', 'visible')
-        map.setLayoutProperty('bridge-primary-case', 'visibility', 'visible')
-        map.setLayoutProperty('bridge-secondary-tertiary', 'visibility', 'visible')
         map.setLayoutProperty('bridge-construction', 'visibility', 'visible')
         map.setLayoutProperty('bridge-street-low', 'visibility', 'visible')
         map.setLayoutProperty('bridge-street', 'visibility', 'visible')
@@ -200,11 +202,6 @@ const triggerRepaintStyle = (map: mapboxgl.Map) => {
         map.setLayoutProperty('tunnel-minor-link-case', 'visibility', 'visible')
     }else {
         map.setLayoutProperty('road-label', 'visibility', 'none')
-        //
-        map.setLayoutProperty('bridge-motorway-trunk-2', 'visibility', 'none')
-        map.setLayoutProperty('bridge-major-link-2', 'visibility', 'none')
-        map.setLayoutProperty('bridge-motorway-trunk-2-case', 'visibility', 'none')
-        map.setLayoutProperty('bridge-major-link-2-case', 'visibility', 'none')
         map.setLayoutProperty('bridge-motorway-trunk', 'visibility', 'none')
         map.setLayoutProperty('bridge-primary', 'visibility', 'none')
         map.setLayoutProperty('bridge-primary-case', 'visibility', 'none')
@@ -231,7 +228,6 @@ const triggerRepaintStyle = (map: mapboxgl.Map) => {
         map.setLayoutProperty('road-minor-case', 'visibility', 'none')
         map.setLayoutProperty('road-minor', 'visibility', 'none')
         //
-        map.setLayoutProperty('tunnel-motorway-trunk', 'visibility', 'none')
         map.setLayoutProperty('tunnel-major-link', 'visibility', 'none')
         map.setLayoutProperty('tunnel-primary-case', 'visibility', 'none')
         map.setLayoutProperty('tunnel-secondary-tertiary-case', 'visibility', 'none')
@@ -245,62 +241,44 @@ const triggerRepaintStyle = (map: mapboxgl.Map) => {
         map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 0 })
     }
     if (style.includes('amm')){
-        map.setLayoutProperty('amm-airport', 'visibility', 'visible')
-        map.setLayoutProperty('amm-airstrip', 'visibility', 'visible')
-        map.setLayoutProperty('amm-helipad', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-1', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-2', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-3', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-4', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-1-line', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-2-line', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-3-line', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-4-line', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-1-label', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-2-label', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-3-label', 'visibility', 'visible')
-        map.setLayoutProperty('amm-taxiway-4-label', 'visibility', 'visible')
-        map.setLayoutProperty('amm-runway', 'visibility', 'visible')
-        map.setLayoutProperty('amm-terminal-3d', 'visibility', 'visible')
-        map.setLayoutProperty('amm-terminal-base', 'visibility', 'visible')
-        map.setLayoutProperty('amm-apron', 'visibility', 'visible')
-        map.setLayoutProperty('amm-park-line', 'visibility', 'visible')
-        map.setLayoutProperty('amm-park-line-2', 'visibility', 'visible')
-        map.setLayoutProperty('amm-park-label', 'visibility', 'visible')
-        map.setLayoutProperty('amm-gate', 'visibility', 'visible')
+        map.setLayoutProperty('apt', 'visibility', 'visible')
+        map.setLayoutProperty('rwyl', 'visibility', 'visible')
+        map.setLayoutProperty('osm-taxl', 'visibility', 'visible')
+        map.setLayoutProperty('taxa', 'visibility', 'visible')
+        map.setLayoutProperty('osm-rwyl', 'visibility', 'visible')
+        map.setLayoutProperty('rwya', 'visibility', 'visible')
+        map.setLayoutProperty('guidanceline-solid', 'visibility', 'visible')
+        map.setLayoutProperty('guidanceline-dashed', 'visibility', 'visible')
+        map.setLayoutProperty('guidanceline-doted', 'visibility', 'visible')
+        map.setLayoutProperty('building', 'visibility', 'visible')
+        map.setLayoutProperty('amdb-taxl-label', 'visibility', 'visible')
+        map.setLayoutProperty('osm-taxl-label', 'visibility', 'visible')
+        map.setLayoutProperty('gate-label', 'visibility', 'visible')
+        map.setLayoutProperty('rwyp-label', 'visibility', 'visible')
     }else{
-        map.setLayoutProperty('amm-airport', 'visibility', 'none')
-        map.setLayoutProperty('amm-airstrip', 'visibility', 'none')
-        map.setLayoutProperty('amm-helipad', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-1', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-2', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-3', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-4', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-1-line', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-2-line', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-3-line', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-4-line', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-1-label', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-2-label', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-3-label', 'visibility', 'none')
-        map.setLayoutProperty('amm-taxiway-4-label', 'visibility', 'none')
-        map.setLayoutProperty('amm-runway', 'visibility', 'none')
-        map.setLayoutProperty('amm-terminal-3d', 'visibility', 'none')
-        map.setLayoutProperty('amm-terminal-base', 'visibility', 'none')
-        map.setLayoutProperty('amm-apron', 'visibility', 'none')
-        map.setLayoutProperty('amm-park-line', 'visibility', 'none')
-        map.setLayoutProperty('amm-park-line-2', 'visibility', 'none')
-        map.setLayoutProperty('amm-park-label', 'visibility', 'none')
-        map.setLayoutProperty('amm-gate', 'visibility', 'none')
+        map.setLayoutProperty('apt', 'visibility', 'none')
+        map.setLayoutProperty('rwyl', 'visibility', 'none')
+        map.setLayoutProperty('osm-taxl', 'visibility', 'none')
+        map.setLayoutProperty('taxa', 'visibility', 'none')
+        map.setLayoutProperty('osm-rwyl', 'visibility', 'none')
+        map.setLayoutProperty('rwya', 'visibility', 'none')
+        map.setLayoutProperty('guidanceline-solid', 'visibility', 'none')
+        map.setLayoutProperty('guidanceline-dashed', 'visibility', 'none')
+        map.setLayoutProperty('guidanceline-doted', 'visibility', 'none')
+        map.setLayoutProperty('building', 'visibility', 'none')
+        map.setLayoutProperty('amdb-taxl-label', 'visibility', 'none')
+        map.setLayoutProperty('osm-taxl-label', 'visibility', 'none')
+        map.setLayoutProperty('gate-label', 'visibility', 'none')
+        map.setLayoutProperty('rwyp-label', 'visibility', 'none')
     }
     if (style.includes('grid')){
         map.setLayoutProperty('grid-lines-1', 'visibility', 'visible')
         map.setLayoutProperty('grid-lines-2', 'visibility', 'visible')
-        map.setLayoutProperty('mora', 'visibility', 'visible')
+        map.setLayoutProperty('gridmora-label', 'visibility', 'visible')
     }else{
         map.setLayoutProperty('grid-lines-1', 'visibility', 'none')
         map.setLayoutProperty('grid-lines-2', 'visibility', 'none')
-        map.setLayoutProperty('mora', 'visibility', 'none')
+        map.setLayoutProperty('gridmora-label', 'visibility', 'none')
     }
     if (map.getLayer('aip')){
         if (style.includes('aip')){

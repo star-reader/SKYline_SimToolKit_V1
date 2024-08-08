@@ -29,26 +29,12 @@ const initMapStyle = (map: Map) => {
     if (!map) {
         return
     }
-    let layers = (<StyleSpecification>map.getStyle()).layers
     map.setPaintProperty('land', 'background-color', '#F5F5F5')  //ifrh，ifrl
     //map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')  //vor
     //map.setPaintProperty('water', 'fill-color', 'rgb(158,206,250)')
     //map.setPaintProperty('water-depth', 'fill-color', 'rgb(158,206,250)')
     map.setPaintProperty('water', 'fill-color', 'rgb(111,203,255)')
     map.setPaintProperty('water-depth', 'fill-color', 'rgb(111,203,255)')
-    for (let i in layers) {
-        let d = layers[i]
-        if (!d.id.includes('land') && !d.id.includes('water')) {
-            map.setLayoutProperty(d.id, 'visibility', 'none')
-        }
-    }
-    map.setLayoutProperty('waterway-label', 'visibility', 'none')
-    map.setLayoutProperty('water-line-label', 'visibility', 'none')
-    map.setLayoutProperty('water-point-label', 'visibility', 'none')
-    map.setLayoutProperty('landcover', 'visibility', 'none')
-    map.setLayoutProperty('landuse', 'visibility', 'none')
-    map.setLayoutProperty('wetland', 'visibility', 'none')
-    map.setLayoutProperty('wetland-pattern', 'visibility', 'none')
     map.setLayerZoomRange('landcover', 0, 16)
     map.setPaintProperty('landcover','fill-opacity', 0.8)
 }
@@ -1880,41 +1866,57 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
             ]
         } as FogSpecification)
         //导航数据
-        map.setPaintProperty('efb-airports', 'text-halo-color', '#fff')
-        map.setPaintProperty('efb-vors', 'text-halo-color', '#fff')
-        map.setPaintProperty('efb-vors', 'text-color', 'rgb(41,74,117)')
-        map.setPaintProperty('efb-vors', 'icon-color', 'rgb(41,74,117)')
-        map.setPaintProperty('efb-ndbs', 'text-halo-color', '#fff')
-        map.setPaintProperty('efb-waypoints', 'text-halo-color', '#fff')
-        map.setPaintProperty('efb-waypoints-terminal', 'text-halo-color', '#fff')
-        map.setPaintProperty('efb-waypoints', 'icon-color', 'rgb(41,74,117)')
-        map.setPaintProperty('efb-waypoints-terminal', 'icon-color', 'rgb(41,74,117)')
-        map.setPaintProperty('efb-waypoints', 'text-color', 'rgb(41,74,117)')
-        map.setPaintProperty('efb-waypoints-terminal', 'text-color', '#000')
-        map.setPaintProperty('efb-airways', 'line-color', '#4682B4')
-        map.setPaintProperty('efb-firs', 'line-color', '#00BFFF')
-        map.setPaintProperty('efb-airways-label', 'icon-color', [
+        map.setPaintProperty("vhf-label","text-color", '#244975')
+        map.setPaintProperty("vhf","icon-color", '#244975')
+        // map.setPaintProperty("airway-bg","line-color", '#fff')
+        map.setPaintProperty("waypoint","icon-color", 'rgb(36,73,117)')
+        map.setPaintProperty("terminal-waypoint","icon-color", 'rgb(36,73,117)')
+        map.setPaintProperty("waypoint-label","text-color", 'rgb(36,73,117)')
+        map.setPaintProperty("terminal-waypoint-label","text-color", 'rgb(36,73,117)')
+        map.setPaintProperty("taxa",'fill-color','rgb(229,229,229)')
+        map.setPaintProperty('building','fill-extrusion-color','rgb(124, 140, 177)')
+        map.setPaintProperty('osm-rwyl','line-color','rgb(128,128,128)')
+        map.setPaintProperty('rwya','fill-color','rgb(128,128,128)')
+        //map.setPaintProperty('hota','fill-color','#FA8072')
+        map.setPaintProperty("airway","line-color", [
             "case",
             [
                 "==",
                 [
                     "get",
-                    "type"
+                    "route_type"
                 ],
-                "B"
+                "R"
             ],
-            "#1E90FF",
-            "#FFA500"
+            "rgb(36,73,117)",
+            "#48D1CC"
         ])
-        //AMM
-        map.setPaintProperty('amm-taxiway-1', 'line-color', '#F5F5F5')
-        map.setPaintProperty('amm-taxiway-2', 'line-color', '#F5F5F5')
-        map.setPaintProperty('amm-taxiway-3', 'line-color', '#F5F5F5')
-        map.setPaintProperty('amm-taxiway-4', 'line-color', '#F5F5F5')
-        map.setPaintProperty('amm-apron', 'fill-color', '#F5F5F5')
-        map.setPaintProperty('amm-runway', 'line-color', '#696969')
-        map.setPaintProperty('amm-terminal-base', 'fill-extrusion-color', '#4682B4')
-        map.setPaintProperty('amm-airport', 'fill-color', '#90EE90')
+        map.setPaintProperty("airway-label","icon-color", [
+            "case",
+            [
+                "==",
+                [
+                    "get",
+                    "route_type"
+                ],
+                "R"
+            ],
+            "rgb(36,73,117)",
+            "#fd8d04"
+        ])
+        map.setPaintProperty("gridmora-label","text-color", [
+            "case",
+            [
+                "<",
+                [
+                    "get",
+                    "mora"
+                ],
+                100
+            ],
+            "rgb(0,160,233)",
+            "rgb(245,108,108)"
+        ])
         //公路数据
         map.setPaintProperty('road-label', 'text-color', 'hsl(0,0%, 0%)')
         map.setPaintProperty('road-label', 'text-halo-color', [
@@ -2001,44 +2003,8 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
                 "hsl(35, 89%, 75%)"
             ]
         ])
-        //MORA
-        map.setPaintProperty('mora', 'text-halo-color', '#f5f5f5')
-        map.setPaintProperty('mora', 'text-color', [
-            "case",
-            [
-                "<",
-                [
-                    "get",
-                    "data"
-                ],
-                100
-            ],
-            "rgb(0,160,233)",
-            "rgb(245,108,108)"
-        ])
         //动态数据
-        if (map.getLayer('enroute-query-line')){
-            map.setPaintProperty('enroute-query-line', 'line-color', '#7B68EE')
-        }
-        if (map.getLayer('enroute-search-circle')){
-            map.setPaintProperty('enroute-search-circle', 'circle-color', '#FF69B4')
-        }
-        if (map.getLayer('query-airways')){
-            map.setPaintProperty('query-airways', 'line-color', '#EE82EE')
-        }
-        if (map.getLayer('custom-waypoint')){
-            map.setPaintProperty('custom-waypoint', 'text-halo-color', '#fff')
-            map.setPaintProperty('custom-waypoint', 'icon-color', 'rgb(41,74,117)')
-            map.setPaintProperty('custom-waypoint', 'text-color', 'rgb(41,74,117)')
-        }
-        if (map.getLayer('custom-vor')){
-            map.setPaintProperty('custom-vor', 'text-halo-color', '#fff')
-            map.setPaintProperty('custom-vor', 'text-color', 'rgb(41,74,117)')
-            map.setPaintProperty('custom-vor', 'icon-color', 'rgb(41,74,117)')
-        }
-        if (map.getLayer('custom-ndb')){
-            map.setPaintProperty('custom-ndb', 'text-halo-color', '#fff')
-        }
+        
     }else{
         //基础
         map.setPaintProperty('land', 'background-color', '#000')
@@ -2105,34 +2071,56 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
             ]
         } as FogSpecification)
         //导航数据
-        map.setPaintProperty('efb-airports', 'text-halo-color', '#000000')
-        map.setPaintProperty('efb-vors', 'text-halo-color', '#000000')
-        map.setPaintProperty('efb-vors', 'text-color', '#87CEEB')
-        map.setPaintProperty('efb-vors', 'icon-color', '#87CEEB')
-        map.setPaintProperty('efb-ndbs', 'text-halo-color', '#000000')
-        map.setPaintProperty('efb-waypoints', 'text-halo-color', '#000000')
-        map.setPaintProperty('efb-waypoints-terminal', 'text-halo-color', '#000000')
-        map.setPaintProperty('efb-waypoints', 'icon-color', '#87CEEB')
-        map.setPaintProperty('efb-waypoints-terminal', 'icon-color', '#87CEEB')
-        map.setPaintProperty('efb-waypoints', 'text-color', '#f5f5f5')
-        map.setPaintProperty('efb-waypoints-terminal', 'text-color', '#f5f5f5')
-        map.setPaintProperty('efb-airways', 'line-color', '#ADD8E6')
-        map.setPaintProperty('efb-firs', 'line-color', '#6495ED')
-        map.setPaintProperty('efb-airways-label', 'icon-color', [
-            'case',
-            ['==', ['get','type'], 'B'],
-            'rgb(34, 97, 174)',
-            '#CD853F'
+        map.setPaintProperty("vhf-label","text-color", 'rgb(169,217,225)')
+        map.setPaintProperty("vhf","icon-color", 'rgb(169,217,225)')
+        // map.setPaintProperty("airway-bg","line-color", '#000')
+        map.setPaintProperty("waypoint","icon-color", 'rgb(160,207,255)')
+        map.setPaintProperty("terminal-waypoint","icon-color", 'rgb(160,207,255)')
+        map.setPaintProperty("waypoint-label","text-color", 'rgb(160,207,255)')
+        map.setPaintProperty("terminal-waypoint-label","text-color", 'rgb(160,207,255)')
+        map.setPaintProperty("airway","line-color", [
+          "case",
+          [
+              "==",
+              [
+                  "get",
+                  "route_type"
+              ],
+              "R"
+          ],
+          "#ADD8E6",
+          "rgb(65,105,225)"
         ])
-        //AMM
-        map.setPaintProperty('amm-taxiway-1', 'line-color', '#808080')
-        map.setPaintProperty('amm-taxiway-2', 'line-color', '#808080')
-        map.setPaintProperty('amm-taxiway-3', 'line-color', '#808080')
-        map.setPaintProperty('amm-taxiway-4', 'line-color', '#808080')
-        map.setPaintProperty('amm-apron', 'fill-color', '#696969')
-        map.setPaintProperty('amm-runway', 'line-color', 'rgb(70,70,70)')
-        map.setPaintProperty('amm-terminal-base', 'fill-extrusion-color', '#778899')
-        map.setPaintProperty('amm-airport', 'fill-color', '#2E8B57')
+        map.setPaintProperty("airway-label","icon-color", [
+          "case",
+          [
+              "==",
+              [
+                  "get",
+                  "route_type"
+              ],
+              "R"
+          ],
+          "#4169E1",
+          "rgb(202, 107, 23)"
+        ])
+        map.setPaintProperty("gridmora-label","text-color", [
+          "case",
+          [
+              "<",
+              [
+                  "get",
+                  "mora"
+              ],
+              100
+          ],
+          "rgb(60,160,233)",
+          "rgb(150,103,107)"
+        ])
+        map.setPaintProperty("taxa",'fill-color','#696969')
+        map.setPaintProperty('building','fill-extrusion-color','#708090')
+        map.setPaintProperty('osm-rwyl','line-color','#C0C0C0')
+        map.setPaintProperty('rwya','fill-color','#C0C0C0')
         //公路数据
         map.setPaintProperty('road-label', 'text-color', '#DCDCDC')
         map.setPaintProperty('road-label', 'text-halo-color', '#DCDCDC')
@@ -2207,60 +2195,7 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
                 "rgb(165, 100, 30)"
             ]
         ])
-        //MORA
-        map.setPaintProperty('mora', 'text-halo-color', '#000')
-        map.setPaintProperty('mora', 'text-color', [
-            "case",
-            [
-                "<",
-                [
-                    "get",
-                    "data"
-                ],
-                100
-            ],
-            "rgb(8, 128, 183)",
-            "rgb(202, 96, 96)"
-        ])
-        //动态数据
-        if (map.getLayer('enroute-query-line')){
-            map.setPaintProperty('enroute-query-line', 'line-color', '#40E0D0')
-        }
-        if (map.getLayer('enroute-search-circle')){
-            map.setPaintProperty('enroute-search-circle', 'circle-color', '#FFD700')
-        }
-        if (map.getLayer('query-airways')){
-            map.setPaintProperty('query-airways', 'line-color', '#3ad59a')
-        }
-        if (map.getLayer('custom-waypoint')){
-            map.setPaintProperty('custom-waypoint', 'text-halo-color', '#000000')
-            map.setPaintProperty('custom-waypoint', 'icon-color', '#87CEEB')
-            map.setPaintProperty('custom-waypoint', 'text-color', '#f5f5f5')
-        }
-        if (map.getLayer('custom-vor')){
-            map.setPaintProperty('custom-vor', 'text-halo-color', '#000000')
-            map.setPaintProperty('custom-vor', 'text-color', '#87CEEB')
-            map.setPaintProperty('custom-vor', 'icon-color', '#87CEEB')
-        }
-        if (map.getLayer('custom-ndb')){
-            map.setPaintProperty('custom-ndb', 'text-halo-color', '#000000')
-        }
-    }
-    if (!isUnSateLayer){
-        map.setPaintProperty('mora', 'text-halo-color', '#f5f5f5')
-        map.setPaintProperty('mora', 'text-color', [
-            "case",
-            [
-                "<",
-                [
-                    "get",
-                    "data"
-                ],
-                100
-            ],
-            "rgb(0,160,233)",
-            "rgb(245,108,108)"
-        ])
+
     }
 }
 

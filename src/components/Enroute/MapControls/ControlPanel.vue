@@ -53,65 +53,67 @@
                                 <div class="text-a2">中国航空资料汇编航路图</div>
                             </div>
                         </div>
-                        <div class="space-title">手动选择图层</div>
-                        <div class="space-text-lh2">导航设备</div>
-
-                        <div class="filter-rows">
-                            <ButtonItem content="机场" data="airport">
-                                <LightHouse theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem content="VOR" data="vor">
-                                <HexagonOne theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="ndb" content="NDB" >
-                                <Halo theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="airway" content="航路" >
-                                <ShareOne theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="waypoint" content="航路点" >
-                                <Triangle theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="terminal-waypoint" content="终端航路点" >
-                                <HandleTriangle theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                        </div>
-                        <div class="space-text-lh2">地图显示</div>
-                        <div class="filter-rows">
-                            <ButtonItem data="amm" content="机场详情" >
-                                <Airplane theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="road" content="公路/交通" >
-                                <Road theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="terrain" content="地形/山区" >
-                                <Mountain theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="grid" content="MORA" >
-                                <GridTwo theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="3d" content="3D地形" >
-                                <CoordinateSystem theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                        </div>
-                        <div class="space-text-lh2">辅助图层</div>
-                        <div class="filter-rows">
-                            <ButtonItem data="weather" content="气象雷达" isNaClick >
-                                <LinkCloud theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="dawndarkline" content="晨昏线" isNaClick >
-                                <Brightness theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                        </div>
-                        <div class="space-text-lh2">联飞功能</div>
-                        <div class="filter-rows">
-                            <ButtonItem data="ownship" content="OwnShip" isNaClick >
-                                <MoveOne theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                            <ButtonItem data="server" content="ADSB" isNaClick >
-                                <RadarThree theme="outline" size="24" fill="#ffffff"/>
-                            </ButtonItem>
-                        </div>
+                        <el-collapse v-model="activeName" class="space-title">
+                            <el-collapse-item title="手动选择图层" name="1">
+                                <div class="space-text-lh2">导航设备</div>
+                                <div class="filter-rows">
+                                    <ButtonItem content="机场" data="airport">
+                                        <LightHouse theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem content="VOR" data="vor">
+                                        <HexagonOne theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="ndb" content="NDB" >
+                                        <Halo theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="airway" content="航路" >
+                                        <ShareOne theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="waypoint" content="航路点" >
+                                        <Triangle theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="terminal-waypoint" content="终端航路点" >
+                                        <HandleTriangle theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                </div>
+                                <div class="space-text-lh2">地图显示</div>
+                                <div class="filter-rows">
+                                    <ButtonItem data="amm" content="机场详情" >
+                                        <Airplane theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="road" content="公路/交通" >
+                                        <Road theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="terrain" content="地形/山区" >
+                                        <Mountain theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="grid" content="MORA" >
+                                        <GridTwo theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="3d" content="3D地形" >
+                                        <CoordinateSystem theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                </div>
+                                <div class="space-text-lh2">辅助图层</div>
+                                <div class="filter-rows">
+                                    <ButtonItem data="weather" content="气象雷达" isNaClick >
+                                        <LinkCloud theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="dawndarkline" content="晨昏线" isNaClick >
+                                        <Brightness theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                </div>
+                                <div class="space-text-lh2">联飞功能</div>
+                                <div class="filter-rows">
+                                    <ButtonItem data="ownship" content="OwnShip" isNaClick >
+                                        <MoveOne theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                    <ButtonItem data="server" content="ADSB" isNaClick >
+                                        <RadarThree theme="outline" size="24" fill="#ffffff"/>
+                                    </ButtonItem>
+                                </div>
+                            </el-collapse-item>
+                            </el-collapse>
                     </div>
                 </efb-choice-core>
             </efb-theme-choice-model>
@@ -123,6 +125,7 @@
 import { Airplane, Brightness, CoordinateSystem, GridTwo, Halo, 
     HandleTriangle, HexagonOne, LightHouse, LinkCloud, Mountain, 
     MoveOne, RadarThree, Road, ShareOne, Triangle } from '@icon-park/vue-next'
+import { ref } from 'vue'
 import pubsub from 'pubsub-js'
 import CloseButton from '@/components/common/CloseButton.vue'
 import ButtonItem from './ButtonItem.vue'
@@ -136,6 +139,8 @@ import satedetail from '@/assets/mapTheme/satedetail.png'
 import routel from '@/assets/mapTheme/routel.png'
 import map_t from '@/assets/mapTheme/map.png'
 import aip from '@/assets/mapTheme/aip.png'
+
+const activeName = ref('')
 
 const handleClose = () => {
     pubsub.publish('close-map-choice', 1)
@@ -168,13 +173,15 @@ efb-theme-choice-model{
     efb-choice-core{
         position: absolute;
         width: 75%;
-        height: 58%;
+        //height: 58%;
+        max-height: 58%;
         //max-height: 60%;
         max-width: 765px;
         border-radius: 6px;
         border-width: 1px;
         border-color: var(--model-border-color);
         background-color: var(--model-background-color);
+        overflow: hidden auto;
         .title-area{
             position: relative;
             height: 20px;

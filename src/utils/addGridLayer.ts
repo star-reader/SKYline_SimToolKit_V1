@@ -84,7 +84,7 @@ export default (map: mapboxgl.Map) => {
             0.55,
         ]
         }
-    }, 'efb-ndbs')
+    }, 'apt')
     map.addLayer({
         id: 'grid-lines-2',
         type: 'line',
@@ -110,6 +110,6 @@ export default (map: mapboxgl.Map) => {
             0.85
         ]
         }
-    }, 'efb-ndbs')
+    }, 'apt')
       
 }
