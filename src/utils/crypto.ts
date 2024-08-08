@@ -2,8 +2,8 @@ import CryptoJS from 'crypto-js'
 import keyConfig from '../config/encrypt/keyexport.js'
 const key = CryptoJS.enc.Utf8.parse(keyConfig.key)
 const iv = CryptoJS.enc.Utf8.parse(keyConfig.iv)
-// "key":"2Ytc7TQ138pLknzD",
-// "iv":"iKB5rWsZf2u9wQiJ"
+// "key":"2W6TrfzS7Ukj92fR",
+// "iv":"8UnmP06FwqsA4Bv7"
 
 /**AES解密数据 */
 function dataDecrypt(word: any) {

@@ -15,6 +15,7 @@ import awy from '../../assets/navdata/airway/basic-sdf.png'
 import awy2 from '../../assets/navdata/airway/basic-short-sdf.png'
 import { getPreset, getStyle } from "./useEnrouteMap"
 import useClearLayer from "./useClearLayer"
+import { dataDecrypt } from "@/utils/crypto"
 
 // @ts-ignore
 const isTauri = window.__TAURI__ ? true : false
@@ -1725,8 +1726,18 @@ const addSKYlineLayer_old = (map: Map) => {
     })
 }
 
-const addSKYlineLayer = (map: Map, layerConfig: any[]) => {
-
+const addSKYlineLayer = (map: Map, layerConfig: EnrouteStyle) => {
+    for (let i of layerConfig.sources){
+        map.addSource(i.id, i.source)
+    }
+    for (let i of layerConfig.navdata){
+        let layer: EnrouteLayer = JSON.parse(dataDecrypt(i))
+        map.addLayer(layer.layer, layer.isBeforeId)
+    }
+    for (let i of layerConfig.amm){
+        let layer: EnrouteLayer = JSON.parse(dataDecrypt(i))
+        map.addLayer(layer.layer, layer.isBeforeId)
+    }
 }
 
 const getMapTheme = () => {

@@ -1,5 +1,16 @@
+type EnrouteSource = {
+    id: string,
+    source: any
+}
+
+type EnrouteLayer = {
+    layer: any,
+    isBeforeId?: string
+}
+
 type EnrouteStyle = {
-    map:[],
-    navdata: any[],
-    amm: any[]
+    basic:[],
+    navdata: string[], // encrypted
+    amm: string[], //encrypted,
+    sources: EnrouteSource[]
 }
