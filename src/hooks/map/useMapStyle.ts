@@ -1780,17 +1780,7 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
     }else{
         map.setLayoutProperty('aip', 'visibility', 'none')
     }
-    if (theme === 'light' && isUnSateLayer){
-        //基础
-        if (style.includes('terrain')){
-            map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')
-        }else{
-            map.setPaintProperty('land', 'background-color', '#fff')
-        }
-        
-        map.setPaintProperty('water', 'fill-color', 'rgb(111,203,255)')
-        map.setPaintProperty('water-depth', 'fill-color', 'rgb(111,203,255)')
-        map.setPaintProperty('landcover', 'fill-opacity', 0.8)
+    if (theme === 'light'){
         map.setFog({
             "range": [
                 1,
@@ -1865,6 +1855,77 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
                 0
             ]
         } as FogSpecification)
+    }else{
+        map.setFog({
+            "range": [
+                0.5,
+                20
+            ],
+            "color": [
+                "interpolate",
+                [
+                    "linear"
+                ],
+                [
+                    "zoom"
+                ],
+                4,
+                "hsl(200, 100%, 100%)",
+                6,
+                "hsl(200, 50%, 90%)"
+            ],
+            "high-color": "rgb(20, 49, 118)",
+            "space-color": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                4,
+                "#010b19",
+                7,
+                "rgb(24, 31, 37)"
+              ],
+            "horizon-blend": [
+                "interpolate",
+                [
+                    "exponential",
+                    1.2
+                ],
+                [
+                    "zoom"
+                ],
+                4,
+                0.01,
+                6,
+                0.018
+            ],
+            "star-intensity": [
+                "interpolate",
+                [
+                    "exponential",
+                    1.2
+                ],
+                [
+                    "zoom"
+                ],
+                2,
+                0.3,
+                4,
+                0.2,
+                6,
+                0.2
+            ]
+        } as FogSpecification)
+    }
+    if (theme === 'light' && isUnSateLayer){
+        //基础
+        if (style.includes('terrain')){
+            map.setPaintProperty('land', 'background-color', 'rgb(198, 234, 182)')
+        }else{
+            map.setPaintProperty('land', 'background-color', '#fff')
+        }
+        map.setPaintProperty('water', 'fill-color', 'rgb(111,203,255)')
+        map.setPaintProperty('water-depth', 'fill-color', 'rgb(111,203,255)')
+        map.setPaintProperty('landcover', 'fill-opacity', 0.8)
         //导航数据
         map.setPaintProperty("vhf-label","text-color", '#244975')
         map.setPaintProperty("vhf","icon-color", '#244975')
@@ -2011,65 +2072,6 @@ const changeMapTheme = (theme: 'light' | 'dark', map: mapboxgl.Map) => {
         map.setPaintProperty('water', 'fill-color', 'rgb(17, 31, 65)')
         map.setPaintProperty('water-depth', 'fill-color', 'rgb(17, 31, 65)')
         map.setPaintProperty('landcover', 'fill-opacity', 0.16)
-        map.setFog({
-            "range": [
-                0.5,
-                20
-            ],
-            "color": [
-                "interpolate",
-                [
-                    "linear"
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                "hsl(200, 100%, 100%)",
-                6,
-                "hsl(200, 50%, 90%)"
-            ],
-            "high-color": "rgb(20, 49, 118)",
-            "space-color": [
-                "interpolate",
-                ["linear"],
-                ["zoom"],
-                4,
-                "#010b19",
-                7,
-                "rgb(24, 31, 37)"
-              ],
-            "horizon-blend": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                4,
-                0.01,
-                6,
-                0.018
-            ],
-            "star-intensity": [
-                "interpolate",
-                [
-                    "exponential",
-                    1.2
-                ],
-                [
-                    "zoom"
-                ],
-                2,
-                0.3,
-                4,
-                0.2,
-                6,
-                0.2
-            ]
-        } as FogSpecification)
         //导航数据
         map.setPaintProperty("vhf-label","text-color", 'rgb(169,217,225)')
         map.setPaintProperty("vhf","icon-color", 'rgb(169,217,225)')

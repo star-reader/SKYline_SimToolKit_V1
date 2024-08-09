@@ -34,7 +34,7 @@ const initMap = () => {
         //style: 'mapbox://styles/mapbox/outdoors-v12',
         projection: 'globe' as any as mapboxgl.ProjectionSpecification
     })
-    map.setMaxZoom(16.8)
+    map.setMaxZoom(18)
     map.addControl(new mapboxgl.AttributionControl({
         compact: false,
         customAttribution: 'SKYline SimToolkit | 仅限模拟飞行使用 | 禁止用于实际飞行'

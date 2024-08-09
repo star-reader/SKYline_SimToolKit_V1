@@ -99,7 +99,7 @@
                                     <ButtonItem data="weather" content="气象雷达" isNaClick >
                                         <LinkCloud theme="outline" size="24" fill="#ffffff"/>
                                     </ButtonItem>
-                                    <ButtonItem data="dawndarkline" content="晨昏线" isNaClick >
+                                    <ButtonItem style="display: none;" data="dawndarkline" content="晨昏线" isNaClick >
                                         <Brightness theme="outline" size="24" fill="#ffffff"/>
                                     </ButtonItem>
                                 </div>
