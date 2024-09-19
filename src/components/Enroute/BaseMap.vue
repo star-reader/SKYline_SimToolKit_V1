@@ -86,6 +86,7 @@ const bindMapEventListener = () => {
         console.log(map.getStyle()?.layers)
         triggerRepaintStyle(map)
         useMouse(map)
+        console.log(map.getStyle()?.layers)
     })
     map.on('click', (_e) => {
     // useEnrouteQuery(map.queryRenderedFeatures(e.point))

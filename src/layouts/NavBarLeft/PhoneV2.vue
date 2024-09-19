@@ -54,6 +54,7 @@
                     </div>
                 </van-badge>
             </el-card>
+            <div class="divider-text not-first-line">搜索记录</div>
         </main>
     </van-floating-panel>
 
@@ -87,6 +88,11 @@ main{
     font-weight: bolder;
     color: var(--background-text);
     line-height: 24px;
+    margin: 3px 0;
+    &.not-first-line{
+        margin: 6px 0;
+        margin-top: 10px;
+    }
 }
 .inner-child {
     width: 42px;
